@@ -7,8 +7,9 @@ homepage: https://github.com/kseo/bson_codec
 environment:
   sdk: '>=1.0.0 <2.0.0'
 
-#dependencies:
-#  lib_name: any
+dependencies:
+  bson_objectid: ^0.1.0
+  collection: ^1.9.1
 
 dev_dependencies:
   test: '>=0.12.0 <0.13.0'
