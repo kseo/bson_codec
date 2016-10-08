@@ -5,7 +5,7 @@ for BSON documents.
 
 ## Highlights
 
-* Standard `Codec`/`Encoder`/`Decoder` interface, as established by the
+* Standard `Codec`/`Converter` interface, as established by the
   standard 'dart:convert' package.
 * Best effort type mapping when serializing/deserializing values.
 
