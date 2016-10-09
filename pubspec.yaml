@@ -1,5 +1,5 @@
 name: bson_codec
-description: A BSDON codec for Dart.
+description: A BSON codec for Dart.
 version: 0.1.0
 author: Kwang Yul Seo <kwangyul.seo@gmail.com>
 homepage: https://github.com/kseo/bson_codec
