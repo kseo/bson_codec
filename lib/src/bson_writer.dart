@@ -7,6 +7,8 @@ import 'dart:typed_data';
 import 'package:bson_objectid/bson_objectid.dart';
 
 abstract class BsonWriter {
+  Uint8List get bytes;
+
   void writeDouble(double value);
   void writeByte(int value);
   void writeInt32(int value);
@@ -25,6 +27,7 @@ class _BsonWriter implements BsonWriter {
 
   int _offset;
 
+  @override
   Uint8List get bytes => _list;
 
   _BsonWriter(Uint8List list)
