@@ -1,5 +1,7 @@
 # bson_codec
 
+[![Build Status](https://travis-ci.org/kseo/bson_codec.svg?branch=master)](https://travis-ci.org/kseo/bson_codec)
+
 This package offers Dart programs a flexible serializer and deserializer
 for BSON documents.
 
