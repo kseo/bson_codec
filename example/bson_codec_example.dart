@@ -6,7 +6,5 @@ import 'dart:io';
 import 'package:bson_codec/bson_codec.dart';
 
 main() {
-  List<int> bytes = new File('sample.bson').readAsBytesSync();
-  final o = BSON.decode(bytes);
-  print(o);
+  new File('sample.bson').openRead().transform(new BsonDecoder()).listen(print);
 }

@@ -151,6 +151,36 @@ class BsonEncoder extends Converter<Object, List<int>> {
     }
     return bsonEncode(value);
   }
+
+  @override
+  Sink<Object> startChunkedConversion(Sink<List<int>> sink) =>
+      new _BsonEncoderSink(this, sink);
+}
+
+class _BsonEncoderSink extends ChunkedConversionSink<Object> {
+  final BsonEncoder _converter;
+  final Sink<List<int>> _outSink;
+  bool _isDone = false;
+
+  _BsonEncoderSink(this._converter, this._outSink);
+
+  @override
+  void add(Object data) {
+    if (_isDone) {
+      throw new StateError("Only one call to add allowed");
+    }
+    _isDone = true;
+    _outSink.add(_converter.convert(data));
+    _outSink.close();
+  }
+
+  @override
+  void close() {
+    if (!_isDone) {
+      _isDone = true;
+      _outSink.close();
+    }
+  }
 }
 
 /// This class parses BSON bytes and builds the corresponding objects.
@@ -180,6 +210,30 @@ class BsonDecoder extends Converter<List<int>, Object> {
   dynamic convert(List<int> input) {
     final bsonObject = bsonDecode(input);
     return new _FromBson(_reviver).convertValue(bsonObject);
+  }
+
+  @override
+  ByteConversionSink startChunkedConversion(Sink<Object> sink) =>
+      new _BsonDecoderSink(this, sink);
+}
+
+class _BsonDecoderSink extends ByteConversionSinkBase {
+  final BsonDecoder _converter;
+  final Sink<Object> _outSink;
+  final List<int> _buffer;
+
+  _BsonDecoderSink(this._converter, this._outSink) : _buffer = new List<int>();
+
+  @override
+  void add(List<int> data) {
+    _buffer.addAll(data);
+  }
+
+  @override
+  void close() {
+    final decoded = _converter.convert(_buffer);
+    _outSink.add(decoded);
+    _outSink.close();
   }
 }
 
