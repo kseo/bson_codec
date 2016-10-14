@@ -6,3 +6,6 @@ dart:
 script: ./tool/travis.sh
 env:
   - DARTANALYZER_FLAGS=--fatal-warnings
+matrix:
+  allow_failures:
+    - dart: dev
